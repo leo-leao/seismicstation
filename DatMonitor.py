@@ -15,7 +15,7 @@ class DatMonitor(threading.Thread):
     def __init__(self):
         super(DatMonitor, self).__init__()
         self.kill = threading.Event()
-        self.pathIn = "/home/reftek/seismicstation/"
+        self.pathIn = "/home/reftek/bin/archive/seismicstation/"
         # self.pathIn = "C:/Users/ASUS/Desktop/ArchiverScripts/"
         
     def searchFiles(self):
@@ -46,7 +46,7 @@ class RawMonitor(threading.Thread):
         self.kill = threading.Event()
         self.pathIn = "/home/reftek/bin/archive/"
         # self.pathIn = "C:/Users/ASUS/Desktop/archive/"
-        self.pathCvt = self.pathIn + "RT_ASC"
+        self.pathCvt = self.pathIn + "pas2asc"
         
     def searchFiles(self):
         today = DatFunctions.howToRecord(datetime.now())

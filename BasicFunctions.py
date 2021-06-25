@@ -65,7 +65,8 @@ class DatFunctions:
     
     @staticmethod
     def recordData(date, seismic, channel):
-        pathIn = "C:/Users/ASUS/Desktop/SeismicData/"
+        pathIn = "/home/reftek/bin/archive/SeismicData/"
+        # pathIn = "C:/Users/ASUS/Desktop/SeismicData/"
         path = (pathIn + "%s/%s/" + channel + "/%s") % DatFunctions.howToRecord(date)
         os.makedirs(os.path.dirname(path), exist_ok = True)
         with open(path, "a") as file:
