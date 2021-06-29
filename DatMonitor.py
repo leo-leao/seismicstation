@@ -35,8 +35,8 @@ class DatMonitor(threading.Thread):
                         DatFunctions.processFile(data, filename[-5])
                         os.remove(self.pathIn + filename)
                         BasicFunctions.recordAction("DAT: channel %s | concluded"  % filename[-5])
-                    except Exception as e:
-                        print(e.message, e.args)
+                    except:
+                        print("Ocorreu um erro!")
             time.sleep(0.5) 
             
 class RawMonitor(threading.Thread):

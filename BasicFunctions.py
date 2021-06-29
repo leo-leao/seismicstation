@@ -28,19 +28,15 @@ class DatFunctions:
     @staticmethod
     def processFile(data, channel):
         seismicData = ""
-        aSeismicData = []
         # Obtem as informacoes sobre a captacao de dados
         data = data.replace("$", "").split("\n")
         sampleRate = float(DatFunctions.getValue(data[3]))
         initialDate = DatFunctions.processDatetime(data[4])
-        date = DatFunctions.processDatetime(data[4])
-        bitWeight = float(DatFunctions.getValue(data[5]))
+        bitWeight = float(DatFunctions.getValue(data[6]))
+        seismicData = "%s\n%s\n%s\n" % (datetime.timestamp(initialDate), sampleRate, bitWeight)
         # Processa os valores sismicos recebidos 
-        for counts in data[9:len(data)-1]:
-            speed = float(counts) * bitWeight / 800
-            aSeismicData.append(speed)
-            seismicData += str(datetime.timestamp(date)) + ": %.30f" % speed + "\n"
-            date = date + timedelta(milliseconds = 1000/sampleRate)
+        for counts in data[10:len(data)-1]:
+            seismicData += counts + "\n"
         # Armazena os valores sismicos processados
         DatFunctions.recordData(initialDate, seismicData, channel)           
         
@@ -54,7 +50,7 @@ class DatFunctions:
         date = DatFunctions.getValue(date)
         year, day, hour, minutes, seconds, ms = tuple(date.replace(".", ":").split(":"))
         dt = datetime(int(year), 1, 1) + timedelta(int(day) - 1)
-        return datetime(dt.year, dt.month, dt.day, int(hour), int(minutes), int(seconds), int(ms)*100)
+        return datetime(dt.year, dt.month, dt.day, int(hour), int(minutes), int(seconds), int(int(ms)/10000))
     
     @staticmethod
     def howToRecord(date):
